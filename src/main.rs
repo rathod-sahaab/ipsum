@@ -1,5 +1,10 @@
 #![no_std]
+#![no_main]
 
-mod clipper;
+use panic_halt as _;
+use rp_pico::entry;
 
-fn main() {}
+#[entry]
+fn main() -> ! {
+    loop {}
+}
