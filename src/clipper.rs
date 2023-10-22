@@ -28,6 +28,7 @@ impl WordsClipper {
 impl Iterator for Words {
     type Item = &'static str;
 
+    // TODO: wrap around and repeat
     fn next(&mut self) -> Option<Self::Item> {
         if self.formed_words >= self.words_count || self.index >= self.words.len() {
             return None;
