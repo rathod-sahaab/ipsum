@@ -1,3 +1,9 @@
+use core::{
+    iter::Iterator,
+    option::Option,
+    option::Option::{None, Some},
+};
+
 struct WordsClipper {
     words: &'static str,
 }
@@ -87,7 +93,14 @@ impl Iterator for Words {
 
 #[cfg(test)]
 mod tests {
-    #[test]
+    use core::assert_eq;
+    use core::prelude::rust_2021::test_case;
+    use core::{
+        iter::Iterator,
+        option::Option::{None, Some},
+    };
+
+    #[test_case]
     fn test_words_clipper() {
         let clipper = super::WordsClipper::new("Hello World");
         let mut words = clipper.words(2);
@@ -96,7 +109,7 @@ mod tests {
         assert_eq!(words.next(), None);
     }
 
-    #[test]
+    #[test_case]
     fn test_punctuation() {
         let clipper = super::WordsClipper::new("Hello World, this is. a sample and a test");
         let mut words = clipper.words(8);
@@ -106,7 +119,7 @@ mod tests {
         assert_eq!(words.next(), Some("is. "));
     }
 
-    #[test]
+    #[test_case]
     fn test_reusability() {
         let clipper = super::WordsClipper::new("Hello World this is a sample and a test.");
         let mut words = clipper.words(8);
@@ -120,7 +133,7 @@ mod tests {
         assert_eq!(words.next(), None);
     }
 
-    #[test]
+    #[test_case]
     fn test_refrence_preservation() {
         let clipper = super::WordsClipper::new("Hello World this is a sample and a test.");
         let mut words = clipper.words(8);
@@ -131,7 +144,7 @@ mod tests {
         assert_eq!(reference, another_reference);
     }
 
-    #[test]
+    #[test_case]
     fn test_newline() {
         let clipper = super::WordsClipper::new("Hello\nWorld");
         let mut words = clipper.words(2);
@@ -140,7 +153,7 @@ mod tests {
         assert_eq!(words.next(), None);
     }
 
-    #[test]
+    #[test_case]
     fn test_multiple_spaces() {
         let clipper = super::WordsClipper::new("Hello   World");
         let mut words = clipper.words(2);
@@ -149,7 +162,7 @@ mod tests {
         assert_eq!(words.next(), None);
     }
 
-    #[test]
+    #[test_case]
     fn test_internationalization() {
         let clipper = super::WordsClipper::new("こんに ちは 世界");
         let mut words = clipper.words(2);
@@ -158,7 +171,7 @@ mod tests {
         assert_eq!(words.next(), None);
     }
 
-    #[test]
+    #[test_case]
     fn test_internationalization_hindi() {
         let clipper = super::WordsClipper::new("नमस्ते दुनिया");
         let mut words = clipper.words(2);
@@ -167,7 +180,7 @@ mod tests {
         assert_eq!(words.next(), None);
     }
 
-    #[test]
+    #[test_case]
     fn test_internationalization_arabic() {
         // TODO: Fix this test
         let clipper = super::WordsClipper::new("مرحبا العالم");
